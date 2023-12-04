@@ -2,9 +2,9 @@
 #include <limits.h>
 
 #define N_MAX 100 // số hàng - cột tối đa có thể có là 100
-#define INF 9999 // định nghĩa vô cực bằng 9999 - khi nhập vô cực thì nhập 9999
+#define INF 9999  // định nghĩa vô cực bằng 9999 - khi nhập vô cực thì nhập 9999
 
-void inMaTran(int mat[][N_MAX], int N); // hàm in ma trận khoảng cách ngắn nhất
+void inMaTran(int mat[][N_MAX], int N);        // hàm in ma trận khoảng cách ngắn nhất
 void floydWarshall(int graph[][N_MAX], int N); // hàm xử lý chính
 
 int main()
@@ -87,8 +87,6 @@ void floydWarshall(int graph[][N_MAX], int N)
     // In ra ma trận khoảng cách và ma trận lưu trữ đỉnh tiếp theo nếu có
     printf("Ma tran khoang cach ngan nhat:\n");
     inMaTran(dist, N);
-
-
     // in ra ma trận đường đi
     printf("\nMa tran duong di:\n");
     for (int i = 0; i < N; i++)
@@ -106,6 +104,16 @@ void floydWarshall(int graph[][N_MAX], int N)
         }
         printf("\n");
     }
+    int nhap;
+    int xuat;
+    do
+    {
+        printf("\nHay nhap dinh bat dau: ");
+        scanf("%d", &nhap);
+        printf("\nHay nhap dinh ket thuc: ");
+        scanf("%d", &xuat);
+        printf("\nKhoang cach ngan nhat tu dinh %d den dinh %d la: %d", nhap, xuat, dist[nhap-1][xuat-1]);
+    } while (nhap != 0 && xuat != 0);
 }
 
 void inMaTran(int mat[][N_MAX], int N) // hàm dùng để in ma trận khoảng cách
