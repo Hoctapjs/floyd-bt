@@ -40,45 +40,47 @@ int main()
 
 void floydWarshall(int graph[][N_MAX], int N)
 {
-    int dist[N_MAX][N_MAX];
-    int next[N_MAX][N_MAX];
+    int KhoangCach[N_MAX][N_MAX]; // ma tran khoang cach
+    int Dinh[N_MAX][N_MAX]; // ma tran dinh
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; i++) // vòng lặp hàng
     {
-        for (int j = 0; j < N; j++)
+        for (int j = 0; j < N; j++) // vòng lặp cột
         {
-            dist[i][j] = graph[i][j];
-            if (i == j)
+            KhoangCach[i][j] = graph[i][j]; // gán giá trị cho ma trận khoảng cách d1
+            if (i == j) // kiểm tra điểm bắt đầu và điểm kết thúc
             {
-                next[i][j] = -1; // Không có đỉnh tiếp theo nếu là chính nó
+                Dinh[i][j] = -1; // Không có đỉnh tiếp theo nếu là chính nó
             }
             else if (graph[i][j] != INF)
             {
-                next[i][j] = j; // Đỉnh tiếp theo là j nếu có kết nối từ i đến j
+                Dinh[i][j] = j; // Đỉnh tiếp theo là j nếu có đường đi từ i đến j
             }
             else
             {
-                next[i][j] = -1; // Không có đỉnh tiếp theo nếu không có kết nối từ i đến j
+                Dinh[i][j] = -1; // Không có đỉnh tiếp theo nếu không có đường từ i đến j
             }
         }
     }
 
+    /*Ba vòng lặp lồng nhau này chạy qua tất cả các cặp đỉnh (i, j) và sử dụng đỉnh trung gian k để kiểm tra xem
+    có đường đi ngắn hơn từ i đến j thông qua đỉnh k không.*/
     for (int k = 0; k < N; k++)
     {
         for (int i = 0; i < N; i++)
         {
             for (int j = 0; j < N; j++)
             {
-                if (dist[i][k] == INF || dist[k][j] == INF)
+                if (KhoangCach[i][k] == INF || KhoangCach[k][j] == INF)
                 {
                     continue; // Tránh tràn số nếu có cạnh âm
                 }
 
-                int altDist = dist[i][k] + dist[k][j];
-                if (altDist < dist[i][j])
+                int TongDoDai = KhoangCach[i][k] + KhoangCach[k][j];
+                if (TongDoDai < KhoangCach[i][j])
                 {
-                    dist[i][j] = altDist;
-                    next[i][j] = next[i][k];
+                    KhoangCach[i][j] = TongDoDai;
+                    Dinh[i][j] = Dinh[i][k];
                 }
             }
         }
@@ -86,20 +88,20 @@ void floydWarshall(int graph[][N_MAX], int N)
 
     // In ra ma trận khoảng cách và ma trận lưu trữ đỉnh tiếp theo nếu có
     printf("Ma tran khoang cach ngan nhat:\n");
-    inMaTran(dist, N);
+    inMaTran(KhoangCach, N);
     // in ra ma trận đường đi
     printf("\nMa tran duong di:\n");
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
         {
-            if (next[i][j] == -1)
+            if (Dinh[i][j] == -1)
             {
                 printf("0\t");
             }
             else
             {
-                printf("%d\t", next[i][j] + 1); // +1 vì đề bài đánh số đỉnh từ 1
+                printf("%d\t", Dinh[i][j] + 1); // +1 vì đề bài đánh số đỉnh từ 1
             }
         }
         printf("\n");
@@ -112,7 +114,7 @@ void floydWarshall(int graph[][N_MAX], int N)
         scanf("%d", &nhap);
         printf("\nHay nhap dinh ket thuc: ");
         scanf("%d", &xuat);
-        printf("\nKhoang cach ngan nhat tu dinh %d den dinh %d la: %d", nhap, xuat, dist[nhap-1][xuat-1]);
+        printf("\nKhoang cach ngan nhat tu dinh %d den dinh %d la: %d", nhap, xuat, KhoangCach[nhap-1][xuat-1]);
     } while (nhap != 0 && xuat != 0);
 }
 
