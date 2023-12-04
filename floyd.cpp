@@ -5,7 +5,7 @@
 #define INF 9999  // định nghĩa vô cực bằng 9999 - khi nhập vô cực thì nhập 9999
 
 void inMaTran(int mat[][N_MAX], int N);        // hàm in ma trận khoảng cách ngắn nhất
-void floydWarshall(int graph[][N_MAX], int N); // hàm xử lý chính
+void floydWarshall(int MaTranDauVao[][N_MAX], int N); // hàm xử lý chính
 
 int main()
 {
@@ -23,22 +23,22 @@ int main()
     }
 
     // đoạn mã khai báo và nhập ma trận khoảng cách
-    int graph[N_MAX][N_MAX];
+    int MaTranDauVao[N_MAX][N_MAX];
     printf("Nhap ma tran A:\n");
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
         {
-            scanf("%d", &graph[i][j]);
+            scanf("%d", &MaTranDauVao[i][j]);
         }
     }
 
-    floydWarshall(graph, N); // gọi hàm để tính ma trận theo thuật toán
+    floydWarshall(MaTranDauVao, N); // gọi hàm để tính ma trận theo thuật toán
 
     return 0;
 }
 
-void floydWarshall(int graph[][N_MAX], int N)
+void floydWarshall(int MaTranDauVao[][N_MAX], int N)
 {
     int KhoangCach[N_MAX][N_MAX]; // ma tran khoang cach
     int Dinh[N_MAX][N_MAX]; // ma tran dinh
@@ -47,12 +47,12 @@ void floydWarshall(int graph[][N_MAX], int N)
     {
         for (int j = 0; j < N; j++) // vòng lặp cột
         {
-            KhoangCach[i][j] = graph[i][j]; // gán giá trị cho ma trận khoảng cách d1
+            KhoangCach[i][j] = MaTranDauVao[i][j]; // gán giá trị cho ma trận khoảng cách d1
             if (i == j) // kiểm tra điểm bắt đầu và điểm kết thúc
             {
                 Dinh[i][j] = -1; // Không có đỉnh tiếp theo nếu là chính nó
             }
-            else if (graph[i][j] != INF)
+            else if (MaTranDauVao[i][j] != INF)
             {
                 Dinh[i][j] = j; // Đỉnh tiếp theo là j nếu có đường đi từ i đến j
             }
