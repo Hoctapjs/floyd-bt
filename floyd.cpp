@@ -4,8 +4,9 @@
 #define N_MAX 100 // số hàng - cột tối đa có thể có là 100
 #define INF 9999  // định nghĩa vô cực bằng 9999 - khi nhập vô cực thì nhập 9999
 
-void inMaTran(int mat[][N_MAX], int N);        // hàm in ma trận khoảng cách ngắn nhất
+void inMaTran(int mat[][N_MAX], int N);               // hàm in ma trận khoảng cách ngắn nhất
 void floydWarshall(int MaTranDauVao[][N_MAX], int N); // hàm xử lý chính
+int lietkeduongdi(int Dinh[][N_MAX], int N, int nhap, int xuat);
 
 int main()
 {
@@ -41,14 +42,14 @@ int main()
 void floydWarshall(int MaTranDauVao[][N_MAX], int N)
 {
     int KhoangCach[N_MAX][N_MAX]; // ma tran khoang cach
-    int Dinh[N_MAX][N_MAX]; // ma tran dinh
+    int Dinh[N_MAX][N_MAX];       // ma tran dinh
 
     for (int i = 0; i < N; i++) // vòng lặp hàng
     {
         for (int j = 0; j < N; j++) // vòng lặp cột
         {
             KhoangCach[i][j] = MaTranDauVao[i][j]; // gán giá trị cho ma trận khoảng cách d1
-            if (i == j) // kiểm tra điểm bắt đầu và điểm kết thúc
+            if (i == j)                            // kiểm tra điểm bắt đầu và điểm kết thúc
             {
                 Dinh[i][j] = -1; // Không có đỉnh tiếp theo nếu là chính nó
             }
@@ -106,15 +107,24 @@ void floydWarshall(int MaTranDauVao[][N_MAX], int N)
         }
         printf("\n");
     }
-    int nhap;
-    int xuat;
+    int nhap, xuat;
+    int temp = 0, temp2;
+
     do
     {
         printf("\nHay nhap dinh bat dau: ");
         scanf("%d", &nhap);
         printf("\nHay nhap dinh ket thuc: ");
         scanf("%d", &xuat);
-        printf("\nKhoang cach ngan nhat tu dinh %d den dinh %d la: %d", nhap, xuat, KhoangCach[nhap-1][xuat-1]);
+
+        if (nhap == 0 || xuat == 0)
+        {
+            break; // Thoát khỏi vòng lặp nếu nhap hoặc xuat bằng 0
+        }
+
+        printf("\nKhoang cach ngan nhat tu dinh %d den dinh %d la: %d", nhap, xuat, KhoangCach[nhap - 1][xuat - 1]);
+
+        lietkeduongdi(Dinh, N, nhap, xuat);
     } while (nhap != 0 && xuat != 0);
 }
 
@@ -134,5 +144,38 @@ void inMaTran(int mat[][N_MAX], int N) // hàm dùng để in ma trận khoảng
             }
         }
         printf("\n");
+    }
+}
+/*int lietkeduongdi(int Dinh[][N_MAX], int N, int nhap, int xuat)
+{
+    if (nhap == xuat)
+    {
+        return nhap;
+    }
+
+    if (nhap != xuat)
+    {
+        int temp = Dinh[nhap][xuat];
+        printf("\nDuong di tu dinh %d den dinh %d la: %d", nhap + 1, xuat + 1, Dinh[nhap][xuat]);
+        return lietkeduongdi(Dinh, N, temp, xuat);
+    }
+}*/
+
+int lietkeduongdi(int Dinh[][N_MAX], int N, int nhap, int xuat)
+{
+    nhap = nhap - 1;
+    xuat = xuat - 1;
+    int temp;
+    temp = Dinh[nhap][xuat];
+    while (nhap != xuat)
+    {
+        printf("\nDuong di tu dinh %d den dinh %d la: %d", nhap + 1, xuat + 1, temp + 1);
+        nhap = temp;
+        temp = Dinh[nhap][xuat];
+
+        if (nhap == xuat)
+        {
+            return 0;
+        }
     }
 }
