@@ -167,9 +167,11 @@ int lietkeduongdi(int Dinh[][N_MAX], int N, int nhap, int xuat)
     xuat = xuat - 1;
     int temp;
     temp = Dinh[nhap][xuat];
+    printf("\nDuong di tu dinh %d den dinh %d la: %d", nhap + 1, xuat + 1, nhap + 1);
+
     while (nhap != xuat)
     {
-        printf("\nDuong di tu dinh %d den dinh %d la: %d", nhap + 1, xuat + 1, temp + 1);
+        printf("-->%d", temp + 1);
         nhap = temp;
         temp = Dinh[nhap][xuat];
 
