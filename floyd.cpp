@@ -85,27 +85,29 @@ void floydWarshall(int MaTranDauVao[][N_MAX], int N)
                 }
             }
         }
+        
     }
 
     // In ra ma trận khoảng cách và ma trận lưu trữ đỉnh tiếp theo nếu có
-    printf("Ma tran khoang cach ngan nhat:\n");
+    printf("Ma tran khoang cach ngan nhat:\n\n");
     inMaTran(KhoangCach, N);
     // in ra ma trận đường đi
-    printf("\nMa tran duong di:\n");
+    int khong = 0;
+    printf("\nMa tran duong di:\n\n");
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
         {
             if (Dinh[i][j] == -1)
             {
-                printf("0\t");
+                printf("%4d", khong);
             }
             else
             {
-                printf("%d\t", Dinh[i][j] + 1); // +1 vì đề bài đánh số đỉnh từ 1
+                printf("%4d", Dinh[i][j] + 1); // +1 vì đề bài đánh số đỉnh từ 1
             }
         }
-        printf("\n");
+        printf("\n\n");
     }
     int nhap, xuat;
     int temp = 0, temp2;
@@ -140,10 +142,10 @@ void inMaTran(int mat[][N_MAX], int N) // hàm dùng để in ma trận khoảng
             }
             else
             {
-                printf("%d\t", mat[i][j]);
+                printf("%4d", mat[i][j]);
             }
         }
-        printf("\n");
+        printf("\n\n");
     }
 }
 /*int lietkeduongdi(int Dinh[][N_MAX], int N, int nhap, int xuat)
